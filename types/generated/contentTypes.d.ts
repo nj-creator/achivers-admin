@@ -362,6 +362,88 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiBranchBranch extends Schema.CollectionType {
+  collectionName: 'branches';
+  info: {
+    singularName: 'branch';
+    pluralName: 'branches';
+    displayName: 'Branch';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    branch_name: Attribute.String & Attribute.Required;
+    department: Attribute.Relation<
+      'api::branch.branch',
+      'manyToOne',
+      'api::department.department'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::branch.branch',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::branch.branch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::branch.branch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDepartmentDepartment extends Schema.CollectionType {
+  collectionName: 'departments';
+  info: {
+    singularName: 'department';
+    pluralName: 'departments';
+    displayName: 'Department';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    dept_name: Attribute.String & Attribute.Required;
+    users_permissions_users: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    branches: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::branch.branch'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -766,6 +848,16 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.role'
     >;
+    department: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::department.department'
+    >;
+    branch: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::branch.branch'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -793,6 +885,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::branch.branch': ApiBranchBranch;
+      'api::department.department': ApiDepartmentDepartment;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
