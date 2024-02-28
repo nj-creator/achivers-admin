@@ -1,10 +1,10 @@
 {
   "kind": "collectionType",
-  "collectionName": "departments",
+  "collectionName": "semesters",
   "info": {
-    "singularName": "department",
-    "pluralName": "departments",
-    "displayName": "Department",
+    "singularName": "semester",
+    "pluralName": "semesters",
+    "displayName": "Semester",
     "description": ""
   },
   "options": {
@@ -12,27 +12,20 @@
   },
   "pluginOptions": {},
   "attributes": {
-    "dept_name": {
-      "type": "string",
-      "required": true
+    "semester": {
+      "type": "integer"
     },
     "users_permissions_users": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "plugin::users-permissions.user",
-      "mappedBy": "department"
-    },
-    "branches": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::branch.branch",
-      "mappedBy": "department"
+      "mappedBy": "semester"
     },
     "notes": {
       "type": "relation",
       "relation": "oneToMany",
       "target": "api::note.note",
-      "mappedBy": "department"
+      "mappedBy": "semester"
     }
   }
 }

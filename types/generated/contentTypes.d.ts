@@ -362,88 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiBranchBranch extends Schema.CollectionType {
-  collectionName: 'branches';
-  info: {
-    singularName: 'branch';
-    pluralName: 'branches';
-    displayName: 'Branch';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    branch_name: Attribute.String & Attribute.Required;
-    department: Attribute.Relation<
-      'api::branch.branch',
-      'manyToOne',
-      'api::department.department'
-    >;
-    users_permissions_users: Attribute.Relation<
-      'api::branch.branch',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::branch.branch',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::branch.branch',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiDepartmentDepartment extends Schema.CollectionType {
-  collectionName: 'departments';
-  info: {
-    singularName: 'department';
-    pluralName: 'departments';
-    displayName: 'Department';
-    description: '';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    dept_name: Attribute.String & Attribute.Required;
-    users_permissions_users: Attribute.Relation<
-      'api::department.department',
-      'oneToMany',
-      'plugin::users-permissions.user'
-    >;
-    branches: Attribute.Relation<
-      'api::department.department',
-      'oneToMany',
-      'api::branch.branch'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::department.department',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::department.department',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -819,7 +737,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
   options: {
     draftAndPublish: false;
-    timestamps: true;
   };
   attributes: {
     username: Attribute.String &
@@ -858,6 +775,17 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'manyToOne',
       'api::branch.branch'
     >;
+    division: Attribute.String;
+    enrollment_number: Attribute.BigInteger;
+    semester: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::semester.semester'
+    >;
+    facultyShortName: Attribute.UID &
+      Attribute.SetMinMaxLength<{
+        minLength: 3;
+      }>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -875,6 +803,242 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
+export interface ApiAcademicCalendarAcademicCalendar
+  extends Schema.CollectionType {
+  collectionName: 'academic_calendars';
+  info: {
+    singularName: 'academic-calendar';
+    pluralName: 'academic-calendars';
+    displayName: 'Academic-Calendar';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    department: Attribute.Relation<
+      'api::academic-calendar.academic-calendar',
+      'oneToOne',
+      'api::department.department'
+    >;
+    semester: Attribute.Relation<
+      'api::academic-calendar.academic-calendar',
+      'oneToOne',
+      'api::semester.semester'
+    >;
+    Calendar: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::academic-calendar.academic-calendar',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::academic-calendar.academic-calendar',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiBranchBranch extends Schema.CollectionType {
+  collectionName: 'branches';
+  info: {
+    singularName: 'branch';
+    pluralName: 'branches';
+    displayName: 'Branch';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    branch_name: Attribute.String & Attribute.Required;
+    department: Attribute.Relation<
+      'api::branch.branch',
+      'manyToOne',
+      'api::department.department'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::branch.branch',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::branch.branch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::branch.branch',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiCircularCircular extends Schema.CollectionType {
+  collectionName: 'circulars';
+  info: {
+    singularName: 'circular';
+    pluralName: 'circulars';
+    displayName: 'Circular';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    description: Attribute.Text;
+    image: Attribute.Media;
+    tag: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::circular.circular',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::circular.circular',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiDepartmentDepartment extends Schema.CollectionType {
+  collectionName: 'departments';
+  info: {
+    singularName: 'department';
+    pluralName: 'departments';
+    displayName: 'Department';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    dept_name: Attribute.String & Attribute.Required;
+    users_permissions_users: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    branches: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::branch.branch'
+    >;
+    notes: Attribute.Relation<
+      'api::department.department',
+      'oneToMany',
+      'api::note.note'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::department.department',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiNoteNote extends Schema.CollectionType {
+  collectionName: 'notes';
+  info: {
+    singularName: 'note';
+    pluralName: 'notes';
+    displayName: 'Notes';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    semester: Attribute.Relation<
+      'api::note.note',
+      'manyToOne',
+      'api::semester.semester'
+    >;
+    department: Attribute.Relation<
+      'api::note.note',
+      'manyToOne',
+      'api::department.department'
+    >;
+    notesFaculty: Attribute.Component<'notes.faculty', true>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<'api::note.note', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<'api::note.note', 'oneToOne', 'admin::user'> &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSemesterSemester extends Schema.CollectionType {
+  collectionName: 'semesters';
+  info: {
+    singularName: 'semester';
+    pluralName: 'semesters';
+    displayName: 'Semester';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    semester: Attribute.Integer;
+    users_permissions_users: Attribute.Relation<
+      'api::semester.semester',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    notes: Attribute.Relation<
+      'api::semester.semester',
+      'oneToMany',
+      'api::note.note'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::semester.semester',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::semester.semester',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -885,8 +1049,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::branch.branch': ApiBranchBranch;
-      'api::department.department': ApiDepartmentDepartment;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -895,6 +1057,12 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
+      'api::academic-calendar.academic-calendar': ApiAcademicCalendarAcademicCalendar;
+      'api::branch.branch': ApiBranchBranch;
+      'api::circular.circular': ApiCircularCircular;
+      'api::department.department': ApiDepartmentDepartment;
+      'api::note.note': ApiNoteNote;
+      'api::semester.semester': ApiSemesterSemester;
     }
   }
 }

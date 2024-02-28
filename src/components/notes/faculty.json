@@ -1,0 +1,20 @@
+{
+  "collectionName": "components_notes_faculties",
+  "info": {
+    "displayName": "Faculty"
+  },
+  "options": {},
+  "attributes": {
+    "facultyName": {
+      "type": "string",
+      "required": true
+    },
+    "files": {
+      "displayName": "files",
+      "type": "component",
+      "repeatable": true,
+      "component": "file.files",
+      "required": false
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "collectionName": "components_file_files",
+  "info": {
+    "displayName": "files"
+  },
+  "options": {},
+  "attributes": {
+    "filesData": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

@@ -9,8 +9,7 @@
     "displayName": "User"
   },
   "options": {
-    "draftAndPublish": false,
-    "timestamps": true
+    "draftAndPublish": false
   },
   "attributes": {
     "username": {
@@ -77,6 +76,22 @@
       "relation": "manyToOne",
       "target": "api::branch.branch",
       "inversedBy": "users_permissions_users"
+    },
+    "division": {
+      "type": "string"
+    },
+    "enrollment_number": {
+      "type": "biginteger"
+    },
+    "semester": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::semester.semester",
+      "inversedBy": "users_permissions_users"
+    },
+    "facultyShortName": {
+      "type": "uid",
+      "minLength": 3
     }
   }
 }
