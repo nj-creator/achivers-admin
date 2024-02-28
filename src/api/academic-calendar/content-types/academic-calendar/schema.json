@@ -4,7 +4,8 @@
   "info": {
     "singularName": "academic-calendar",
     "pluralName": "academic-calendars",
-    "displayName": "Academic-Calendar"
+    "displayName": "Academic-Calendar",
+    "description": ""
   },
   "options": {
     "draftAndPublish": true
@@ -22,7 +23,7 @@
       "target": "api::semester.semester"
     },
     "Calendar": {
-      "type": "json"
+      "type": "text"
     }
   }
 }

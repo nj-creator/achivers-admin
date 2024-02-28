@@ -810,6 +810,7 @@ export interface ApiAcademicCalendarAcademicCalendar
     singularName: 'academic-calendar';
     pluralName: 'academic-calendars';
     displayName: 'Academic-Calendar';
+    description: '';
   };
   options: {
     draftAndPublish: true;
@@ -825,7 +826,7 @@ export interface ApiAcademicCalendarAcademicCalendar
       'oneToOne',
       'api::semester.semester'
     >;
-    Calendar: Attribute.JSON;
+    Calendar: Attribute.Text;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
