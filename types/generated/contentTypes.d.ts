@@ -786,6 +786,12 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       Attribute.SetMinMaxLength<{
         minLength: 3;
       }>;
+    subject: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'manyToOne',
+      'api::subject.subject'
+    >;
+    profile: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -1030,6 +1036,11 @@ export interface ApiNoteNote extends Schema.CollectionType {
       'api::department.department'
     >;
     notesFaculty: Attribute.Component<'notes.faculty', true>;
+    subject: Attribute.Relation<
+      'api::note.note',
+      'oneToOne',
+      'api::subject.subject'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1074,6 +1085,48 @@ export interface ApiSemesterSemester extends Schema.CollectionType {
       Attribute.Private;
     updatedBy: Attribute.Relation<
       'api::semester.semester',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSubjectSubject extends Schema.CollectionType {
+  collectionName: 'subjects';
+  info: {
+    singularName: 'subject';
+    pluralName: 'subjects';
+    displayName: 'Subject';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    title: Attribute.String;
+    slug: Attribute.UID<'api::subject.subject', 'title'>;
+    note: Attribute.Relation<
+      'api::subject.subject',
+      'oneToOne',
+      'api::note.note'
+    >;
+    users_permissions_users: Attribute.Relation<
+      'api::subject.subject',
+      'oneToMany',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::subject.subject',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::subject.subject',
       'oneToOne',
       'admin::user'
     > &
@@ -1146,6 +1199,7 @@ declare module '@strapi/types' {
       'api::department.department': ApiDepartmentDepartment;
       'api::note.note': ApiNoteNote;
       'api::semester.semester': ApiSemesterSemester;
+      'api::subject.subject': ApiSubjectSubject;
       'api::time-table.time-table': ApiTimeTableTimeTable;
     }
   }
