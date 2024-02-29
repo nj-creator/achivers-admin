@@ -902,6 +902,7 @@ export interface ApiCircularCircular extends Schema.CollectionType {
     description: Attribute.Text;
     image: Attribute.Media;
     tag: Attribute.String;
+    slug: Attribute.UID<'api::circular.circular', 'title'>;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
