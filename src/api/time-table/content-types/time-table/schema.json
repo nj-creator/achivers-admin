@@ -1,0 +1,28 @@
+{
+  "kind": "collectionType",
+  "collectionName": "time_tables",
+  "info": {
+    "singularName": "time-table",
+    "pluralName": "time-tables",
+    "displayName": "Time-Table"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "semester": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::semester.semester"
+    },
+    "branch": {
+      "type": "relation",
+      "relation": "oneToOne",
+      "target": "api::branch.branch"
+    },
+    "timeTable": {
+      "type": "text"
+    }
+  }
+}

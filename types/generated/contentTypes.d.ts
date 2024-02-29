@@ -845,6 +845,46 @@ export interface ApiAcademicCalendarAcademicCalendar
   };
 }
 
+export interface ApiAttendanceAttendance extends Schema.CollectionType {
+  collectionName: 'attendances';
+  info: {
+    singularName: 'attendance';
+    pluralName: 'attendances';
+    displayName: 'Attendance';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    branch: Attribute.Relation<
+      'api::attendance.attendance',
+      'oneToOne',
+      'api::branch.branch'
+    >;
+    semester: Attribute.Relation<
+      'api::attendance.attendance',
+      'oneToOne',
+      'api::semester.semester'
+    >;
+    attendance: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::attendance.attendance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::attendance.attendance',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiBranchBranch extends Schema.CollectionType {
   collectionName: 'branches';
   info: {
@@ -1041,6 +1081,46 @@ export interface ApiSemesterSemester extends Schema.CollectionType {
   };
 }
 
+export interface ApiTimeTableTimeTable extends Schema.CollectionType {
+  collectionName: 'time_tables';
+  info: {
+    singularName: 'time-table';
+    pluralName: 'time-tables';
+    displayName: 'Time-Table';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    semester: Attribute.Relation<
+      'api::time-table.time-table',
+      'oneToOne',
+      'api::semester.semester'
+    >;
+    branch: Attribute.Relation<
+      'api::time-table.time-table',
+      'oneToOne',
+      'api::branch.branch'
+    >;
+    timeTable: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::time-table.time-table',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::time-table.time-table',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -1060,11 +1140,13 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::academic-calendar.academic-calendar': ApiAcademicCalendarAcademicCalendar;
+      'api::attendance.attendance': ApiAttendanceAttendance;
       'api::branch.branch': ApiBranchBranch;
       'api::circular.circular': ApiCircularCircular;
       'api::department.department': ApiDepartmentDepartment;
       'api::note.note': ApiNoteNote;
       'api::semester.semester': ApiSemesterSemester;
+      'api::time-table.time-table': ApiTimeTableTimeTable;
     }
   }
 }
